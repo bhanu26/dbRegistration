@@ -1,0 +1,98 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>Friends</title> -->
+	<!-- Latest compiled and minified CSS -->
+<!-- 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
+	<!-- jQuery library -->
+<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+
+	<!-- Latest compiled JavaScript -->
+<!-- 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	{{all_friends}}
+<h1>People!</h1> -->
+<!-- with all the data we can then construct a more structured output -->
+<!-- {% for friend in all_friends: %}
+	<p>ID: {{ friend['id'] }}</p>
+	<p>First Name: {{ friend['first_name'] }}</p>
+	<p>Last Name: {{ friend['last_name'] }}</p>
+	<p>Occupation: {{ friend['occupation'] }}</p>
+	<form role="form" action="/edit/{{ friend['id'] }}" method='POST'>
+	<input type="hidden" name="edit">
+	<button type="submit" class="btn btn-default">Edit</button>
+	</form>
+	<form role="form" action="/delete/{{ friend['id'] }}">
+	<input type="hidden" name="delete">
+	<button type="submit" class="btn btn-default">Delete</button>
+	</form>
+   <hr> -->
+<!--   {% endfor %}
+	<h2>Add a Person</h2>
+	<form action='/friends' method='POST'>
+		<label for='first_name'>First Name: <input type="text" name="first_name" id="first_name"></label>
+		<label for='last_name'>Last Name: <input type="text" name="last_name" id="last_name"></label>
+		<label for='occupation'>Occupation: <input type="text" name="occupation" id="occupation"></label>
+		<input type="submit" value="Add">
+	</form>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration Form</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container">
+		<h2>Registration Form</h2>
+		{% with messages = get_flashed_messages() %}
+    	{% if messages %}
+      	{% for message in messages %}
+        <p style="color:red;">{{message}}</p>
+      	{% endfor %}
+    	{% endif %}
+  		{% endwith %}
+		<div class="row">
+			<div class="col-md-8">
+				<form role="form" action="/process" method="POST">
+				  <div class="form-group">
+				    <label>First Name</label>
+				    <input type="text" class="form-control" name="first">
+				  </div>
+				  <div class="form-group">
+				    <label for="name">Last Name</label>
+				    <input type="text" class="form-control" name="last">
+				  </div>
+				  <div class="form-group">
+				    <label for="email">Email address:</label>
+				    <input type="email" class="form-control" name="email">
+				  </div>
+				  <div class="form-group">
+				    <label for="pwd">Password:</label>
+				    <input type="password" class="form-control" name="password">
+				  </div>
+				  <div class="form-group">
+				    <label for="pwd">Confirm Password:</label>
+				    <input type="password" class="form-control" name="confirm">
+				  </div>
+				  <button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
