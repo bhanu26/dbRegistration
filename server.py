@@ -12,7 +12,7 @@ def index():
 	users = mysql.query_db(query)
 	return render_template('index.html', users = users)
 
-@app.route('/process', methods=['POST'])
+@app.route('/register', methods=['POST'])
 def submit():
 	session['first'] = request.form['first']
 	session['last'] = request.form['last']
@@ -50,10 +50,8 @@ def submit():
 			'email': request.form['email'],
 			'password': request.form['password']
 			}
-		print query
 		mysql.query_db(query, data)
-	return redirect("/")
-
+		return render_template('success.html')
 # @app.route('/add', methods=['POST'])
 # def create():
 # 	query = "INSERT INTO friends(first_name, last_name, occupation, created_at, updated_at) VALUES (:first_name, :last_name, :occupation, NOW(), NOW())"
@@ -73,10 +71,10 @@ def submit():
 # 	friends = mysql.query_db(query, data) #combine the query with the data and you'll get back data from the database
 # 	return render_template('edit.html', friends=friends) #this sends you to the edit.html page with friends being the data you requested
 
-@app.route('/delete/<friend_id>')
-def delete(friend_id):
-	query = "DELETE FROM friends WHERE id = :id" #this is the query
-	data = {'id': friend_id} #this is the data
+@app.route('/delete/<user_id>')
+def delete(user_id):
+	query = "DELETE FROM users WHERE id = :id" #this is the query
+	data = {'id': user_id} #this is the data
 	mysql.query_db(query, data) #this is the result from the query with the data from the db
 	return redirect('/') #redirect back to the front page
 

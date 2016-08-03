@@ -68,7 +68,7 @@
   		{% endwith %}
 		<div class="row">
 			<div class="col-md-8">
-				<form role="form" action="/process" method="POST">
+				<form role="form" action="/register" method="POST">
 				  <div class="form-group">
 				    <label>First Name</label>
 				    <input type="text" class="form-control" name="first">
@@ -89,10 +89,38 @@
 				    <label for="pwd">Confirm Password:</label>
 				    <input type="password" class="form-control" name="confirm">
 				  </div>
-				  <button type="submit" class="btn btn-default">Submit</button>
+				  <button type="submit" class="btn btn-default">Register</button>
+				</form>
+				<br>
+				<br>
+				<form role="form" action="/login" method="POST">
+				  <div class="form-group">
+				    <label>Email:</label>
+				    <input type="text" class="form-control" name="first">
+				  </div>
+				  <div class="form-group">
+				    <label for="name">Password</label>
+				    <input type="text" class="form-control" name="last">
+				  </div>
+				  <button type="submit" class="btn btn-default">Log In</button>
 				</form>
 			</div>
 		</div>
 	</div>
+	<h1>Database!</h1> 
+	{% for user in users: %}
+		<p>ID: {{ user['id'] }}</p>
+		<p>First Name: {{ user['first_name'] }}</p>
+		<p>Last Name: {{ user['last_name'] }}</p>
+		<p>Email: {{ user['email'] }}</p>
+		<p>Created at: {{ user['created_at'] }}</p>
+		<p>Updated at: {{ user['updated_at'] }}</p>
+		
+		<form role="form" action="/delete/{{ user['id'] }}">
+		<input type="hidden" name="delete">
+		<button type="submit" class="btn btn-default">Delete</button>
+		</form>
+	   <hr>
+	   {% endfor %}
 </body>
 </html>
