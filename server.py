@@ -29,6 +29,7 @@ def login():
 
 @app.route('/register', methods=['POST'])
 def submit():
+	email = request.form['email']
 	session['first'] = request.form['first']
 	session['last'] = request.form['last']
 	session['email'] = request.form['email']
@@ -54,6 +55,12 @@ def submit():
 		error += 1
 	if len(request.form['password']) != len(request.form['confirm']):
 		flash("Confirmed password doesn't match!")
+		error += 1
+	user = "SELECT * FROM users WHERE users.email = :email LIMIT 1"
+	data = {'email': email}
+	user = mysql.query_db(user, data)
+	if user[0]:
+		flash('That email is already registered!')
 		error += 1
 	if error > 0:
 		return redirect('/')
