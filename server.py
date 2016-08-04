@@ -12,6 +12,21 @@ def index():
 	users = mysql.query_db(query)
 	return render_template('index.html', users = users)
 
+@app.route('/login', methods=['POST'])
+def login():
+	email = request.form['email']
+	password = request.form['password']
+	user = "SELECT * FROM users WHERE users.email = :email LIMIT 1"
+	data = {'email': email}
+	user = mysql.query_db(user, data)
+	print user[0]
+	if user[0]:
+		if user[0]['password'] == password:
+			return render_template('success.html')
+		else:
+			flash("Wrong credentials")
+			return redirect('/')
+
 @app.route('/register', methods=['POST'])
 def submit():
 	session['first'] = request.form['first']
