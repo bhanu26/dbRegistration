@@ -19,12 +19,15 @@ def login():
 	user = "SELECT * FROM users WHERE users.email = :email LIMIT 1"
 	data = {'email': email}
 	user = mysql.query_db(user, data)
-	print user[0]
+	if len(user) == 0:
+		flash('There is no account with that email!')
+		return redirect('/')
 	if user[0]:
 		if user[0]['password'] == password:
+			session['email'] = request.form['email']
 			return render_template('success.html')
 		else:
-			flash("Wrong credentials")
+			flash("Incorrect email and/or password!")
 			return redirect('/')
 
 @app.route('/register', methods=['POST'])
@@ -56,13 +59,15 @@ def submit():
 	if len(request.form['password']) != len(request.form['confirm']):
 		flash("Confirmed password doesn't match!")
 		error += 1
+	if error > 0:
+		print error
+		return redirect('/')
 	user = "SELECT * FROM users WHERE users.email = :email LIMIT 1"
 	data = {'email': email}
 	user = mysql.query_db(user, data)
-	if user[0]:
+	if len(user) > 0:
 		flash('That email is already registered!')
 		error += 1
-	if error > 0:
 		return redirect('/')
 	if error == 0:
 		query = "INSERT INTO users(first_name, last_name, email, password, created_at, updated_at) VALUES (:first_name, :last_name, :email, :password, NOW(), NOW())"
@@ -74,17 +79,11 @@ def submit():
 			}
 		mysql.query_db(query, data)
 		return render_template('success.html')
-# @app.route('/add', methods=['POST'])
-# def create():
-# 	query = "INSERT INTO friends(first_name, last_name, occupation, created_at, updated_at) VALUES (:first_name, :last_name, :occupation, NOW(), NOW())"
-# 	data = {
-# 			'first_name': request.form['first'],
-# 			'last_name': request.form['last'],
-# 			'email': request.form['email'],
-# 			'password': request.form['password']
-# 		}
-# 	mysql.query_db(query, data)
-# 	return redirect('/')
+
+@app.route('/logout')
+def logout():
+	session['email'] = []
+	return redirect('/')
 
 # @app.route('/edit/<friend_id>', methods=['POST'])
 # def show(friend_id): #friend_id is the variable that you're passing
